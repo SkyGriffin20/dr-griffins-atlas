@@ -1,0 +1,29 @@
+{
+  "shelves": [
+    {
+      "title": "Vol. I — Beasts",
+      "books": [
+        { "id": "codex-naturalist", "title": "Codex Naturalis", "author": "Hart", "style": "b-nat" },
+        { "id": "songs-sleepless", "title": "Songs, Sleepless", "author": "Ilyas", "style": "b-poe" },
+        { "id": "unfathomed-things", "title": "Unfathomed Things", "author": "Merrit", "style": "b-sai" },
+        { "id": "on-warding", "title": "On Warding", "author": "Cassian", "style": "b-cle" }
+      ]
+    },
+    {
+      "title": "Vol. II — Places & Relics",
+      "books": [
+        { "id": "maps-stolen-twice", "title": "Maps Stolen Twice", "author": "Fen", "style": "b-rog" },
+        { "id": "herbal-elsewhere", "title": "Herbal of Elsewhere", "author": "Thorne", "style": "b-nat" },
+        { "id": "letters-lost", "title": "Letters to the Lost", "author": "Anonymous", "style": "b-poe" }
+      ]
+    },
+    {
+      "title": "Vol. III — Spirits & Signals",
+      "books": [
+        { "id": "liturgies-dusk", "title": "Liturgies of Dusk", "author": "Cassian", "style": "b-cle" },
+        { "id": "sky-ledger", "title": "Sky Ledger", "author": "Hart", "style": "b-sai" },
+        { "id": "curious-oddities", "title": "Curious Oddities", "author": "Griffin", "style": "b-rog" }
+      ]
+    }
+  ]
+}

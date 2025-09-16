@@ -1,0 +1,257 @@
+﻿:root{
+  /* ROOM + CABINET THEME */
+  --wall:#120f0d;
+  --wall2:#1a1512;
+  --gold:#d6b26e;
+  --paper:#f6edd9; --ink:#2b211a;
+
+  /* Wood tones */
+  --wood:#3e2f24; --wood2:#2d221a; --shelf-face:#2c2119; --shelf-edge:#231a14;
+
+  /* CABINET BASE SIZE (fixed “design size”; we’ll scale down if needed) */
+  --cabinet-w: 1100px;
+  --cabinet-h: 620px;
+
+  /* Book spines */
+  --book-w: 84px;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  color:#eadfcd;
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(0,0,0,.7), rgba(0,0,0,.95) 60%),
+    linear-gradient(180deg, var(--wall), var(--wall2));
+}
+
+/* HEADER */
+.hdr{ display:flex; align-items:end; gap:.8rem; padding: clamp(10px, 2.5vw, 18px); }
+.brand{ margin:0; font-size: clamp(1.2rem, 3.5vw, 2rem); color:var(--gold); letter-spacing:.06em; font-variant: small-caps; text-shadow:0 0 14px rgba(214,178,110,.32); }
+.tag{ opacity:.8; font-size: clamp(.8rem, 1.6vw, 1rem); margin:0 0 .2rem 0; }
+
+/* ROOM / WALL */
+.room{
+  min-height: calc(100vh - 64px);
+  display:grid; place-items:center;
+  padding: clamp(12px, 3vw, 28px);
+  background:
+    radial-gradient(900px 480px at 50% 0, rgba(255,255,255,.05), transparent 70%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0 2px, transparent 2px 60px),
+    linear-gradient(180deg, var(--wall), var(--wall2));
+}
+
+/* CABINET WRAP uses perspective for door rotations */
+.cabinet-wrap{
+  display:grid; place-items:center;
+  width: 100%;
+}
+.cabinet-area{
+  width: var(--cabinet-w);
+  height: var(--cabinet-h);
+  position: relative;
+  transform-origin: top center;
+  /* subtle drop shadow like a heavy cabinet on a wall */
+  filter: drop-shadow(0 30px 60px rgba(0,0,0,.6));
+  perspective: 1200px;
+}
+
+/* CABINET FRAME + BODY */
+.cabinet{
+  position:absolute; inset:0;
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.3)),
+    repeating-linear-gradient(0deg, var(--wood) 0 18px, var(--wood2) 19px 20px);
+  box-shadow:
+    inset 0 0 0 6px #2b2018,           /* inner thick frame */
+    inset 0 0 0 10px #1f1813,          /* darker step */
+    inset 0 40px 120px rgba(0,0,0,.55);/* vignette */
+  overflow:hidden;
+}
+
+/* SHELVES */
+.shelves{
+  position:absolute; inset: 20px 24px;
+  display:flex; flex-direction:column; gap: 20px;
+}
+.shelf{
+  flex:1; position:relative;
+  background: linear-gradient(180deg, var(--shelf-face), #1f1712);
+  border: 2px solid var(--shelf-edge);
+  border-radius: 10px;
+  box-shadow:
+    inset 0 10px 18px rgba(0,0,0,.45),
+    0 2px 0 rgba(255,255,255,.06);
+  display:flex; align-items:flex-end; gap:10px; padding: 12px; overflow:hidden;
+}
+.plaque{
+  position:absolute; top:8px; right:10px;
+  background:rgba(0,0,0,.4); color:var(--gold);
+  padding:4px 8px; border-radius:6px; font-size:.85rem;
+  border:1px solid rgba(214,178,110,.35);
+}
+
+/* BOOK SPINES */
+.book{
+  width: var(--book-w); height: 92%; min-height: 110px; border-radius: 4px;
+  position:relative; cursor:pointer; outline: none;
+  display:flex; align-items:center; justify-content:center;
+  writing-mode: vertical-rl; text-orientation: mixed; text-align:center; padding:8px 4px; color:#f0e7d6;
+  border-left: 8px solid rgba(0,0,0,.35);
+  box-shadow: inset 4px 0 0 rgba(255,255,255,.06), 0 10px 18px rgba(0,0,0,.35);
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+.book:focus-visible{ outline: 2px solid #e9d8a6; outline-offset: 2px; }
+.book:hover{ transform: translateY(-3px); box-shadow: inset 4px 0 0 rgba(255,255,255,.12), 0 16px 28px rgba(0,0,0,.45); filter: saturate(1.06); }
+.book .by{ font-size:.8em; opacity:.85; }
+
+/* Cover palettes */
+.b-nat{ background: linear-gradient(135deg, #6a5b49, #4e4236); }
+.b-poe{ background: linear-gradient(135deg, #5a2a2a, #7a3d3d); }
+.b-sai{ background: linear-gradient(135deg, #2c4a5a, #1e3644); }
+.b-cle{ background: linear-gradient(135deg, #3f3a2a, #2b271c); }
+.b-rog{ background: linear-gradient(135deg, #3c2f4f, #2b2239); }
+
+/* ===== GLASS WINDOW DOORS ===== */
+.doors{
+  position:absolute; inset:0;
+  pointer-events: none; /* buttons re-enable below */
+}
+.door{
+  pointer-events: auto;
+  position:absolute; top:0; bottom:0; width: 50%;
+  border-radius: 16px;
+  border: 8px solid #2b2018;  /* wooden frame around glass */
+  background:
+    radial-gradient(900px 600px at 50% -10%, rgba(255,255,255,.04), rgba(0,0,0,.25) 60%),
+    rgba(32,24,19,.65);
+  box-shadow:
+    inset 0 0 0 2px #1f1712,
+    inset 0 40px 120px rgba(0,0,0,.35),
+    0 10px 20px rgba(0,0,0,.5);
+  transform-style: preserve-3d;
+  transition: transform .9s cubic-bezier(.2,.7,0,1);
+}
+.door-left { left:0; transform-origin: left center; }
+.door-right{ right:0; transform-origin: right center; }
+
+/* Glass mullions */
+.mullions{
+  position:absolute; inset: 16px;
+  background:
+    linear-gradient(transparent 49%, rgba(0,0,0,.35) 50%, transparent 51%),
+    linear-gradient(90deg, transparent 49%, rgba(0,0,0,.35) 50%, transparent 51%);
+  background-size: 100% 33.33%, 33.33% 100%;
+  background-position: center;
+  mix-blend-mode: multiply;
+}
+/* Glass shine */
+.shine{
+  position:absolute; inset:0;
+  background:
+    linear-gradient(75deg, rgba(255,255,255,.25) 0%, rgba(255,255,255,0) 35%,
+                          rgba(255,255,255,0) 65%, rgba(255,255,255,.18) 100%);
+  opacity:.65; pointer-events:none;
+}
+/* Handles */
+.handle{
+  position:absolute; top:50%; transform: translateY(-50%);
+  width: 16px; height: 56px; border-radius: 10px;
+  background: linear-gradient(180deg, #e9d39b, #b78b3e);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.6), 0 8px 18px rgba(0,0,0,.6);
+}
+.door-left .handle{ right: 10px; }
+.door-right .handle{ left: 10px; }
+
+/* OPEN STATE (doors swing wide open outward) */
+.cabinet-area.open .door-left  { transform: rotateY(130deg); }
+.cabinet-area.open .door-right { transform: rotateY(-130deg); }
+
+/* OPEN BUTTON (below cabinet) */
+.enter-btn{
+  position:absolute; left:50%; bottom: -46px; transform: translateX(-50%);
+  background:#2a2019; color:#eadfcd; border:1px solid #4a372a; border-radius: 10px;
+  padding:.5rem .8rem; cursor:pointer;
+  box-shadow: 0 8px 18px rgba(0,0,0,.5);
+}
+.enter-btn:hover{ background:#3a2d24; }
+
+.door {
+  transition: transform 1.6s cubic-bezier(.25, .85, .3, 1.1);
+}
+
+/* ===== Cast shadows from doors onto the cabinet interior ===== */
+.door-shadows{
+  position:absolute; inset:0;
+  pointer-events:none; z-index: 2; /* below doors (z by source order), above shelves */
+}
+
+/* Left shadow: dark near hinge, fading inward */
+.shadow-left,
+.shadow-right{
+  position:absolute; top:0; bottom:0; width: 52%;
+  transition: opacity 1.2s ease, transform 1.2s ease;
+  opacity: .45; /* closed = strongest */
+  mix-blend-mode: multiply;
+}
+
+/* Gradient shapes for each side */
+.shadow-left{
+  left:0;
+  background:
+    radial-gradient(120% 100% at 100% 50%, rgba(0,0,0,.65) 0%, rgba(0,0,0,.35) 35%, rgba(0,0,0,0) 70%);
+  transform: translateX(0); /* closed */
+}
+.shadow-right{
+  right:0;
+  background:
+    radial-gradient(120% 100% at 0% 50%, rgba(0,0,0,.65) 0%, rgba(0,0,0,.35) 35%, rgba(0,0,0,0) 70%);
+  transform: translateX(0); /* closed */
+}
+
+/* When doors open wide, slide shadows outward and fade them out */
+.cabinet-area.open .shadow-left{
+  transform: translateX(-12%);  /* follows the left door outward */
+  opacity: .06;                  /* almost gone when fully open */
+}
+.cabinet-area.open .shadow-right{
+  transform: translateX(12%);    /* follows the right door outward */
+  opacity: .06;
+}
+
+/* Optional: a little hinge-area ambient occlusion that stays visible */
+.door-left::before,
+.door-right::before{
+  content:''; position:absolute; top:0; bottom:0; width: 18px;
+  pointer-events:none;
+  background: linear-gradient(90deg, rgba(0,0,0,.35), rgba(0,0,0,0));
+  opacity:.5;
+}
+.door-right::before{
+  right:auto; left:0;
+  transform: scaleX(-1);
+}
+
+/* Make the doors swing wide open outward (as you set earlier) */
+.cabinet-area.open .door-left  { transform: rotateY(175deg); }
+.cabinet-area.open .door-right { transform: rotateY(-175deg); }
+
+/* Heavier, smoother motion for big doors */
+.door{
+  transition: transform 1.6s cubic-bezier(.25, .85, .3, 1.08);
+}
+
+/* ===== Responsive: we keep a fixed design size and SCALE DOWN if the viewport is smaller ===== */
+@media (max-width: 1200px){
+  :root{ --book-w: 72px; }
+}
+@media (max-width: 900px){
+  :root{ --book-w: 56px; }
+}
+@media (max-width: 560px){
+  :root{ --book-w: 48px; }
+  .tag{ display:none; }
+}
