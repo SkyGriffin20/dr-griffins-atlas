@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dr. Griffin’s Atlas</title>
+  <meta name="description" content="An explorer’s library of strange wonders. Enter the cabinet to browse collected diaries and codices." />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="hdr">
+    <h1 class="brand">Dr. Griffin’s Atlas</h1>
+    <p class="tag">A private cabinet of expeditions and wonders</p>
+  </header>
+
+  <main class="door-wrap">
+    <section class="cabinet-area" aria-label="Cabinet entrance">
+      <!-- Cabinet & shelves; books injected from JSON by app.js -->
+      <div class="cabinet" id="cabinet">
+        <div class="shelves" id="shelves" aria-live="polite"></div>
+      </div>
+
+      <!-- Door overlay (closed by default) -->
+      <div class="door" id="door" role="dialog" aria-label="Entrance">
+        <div class="door-inner">
+          <div class="door-title">Entrance — Touch to Enter</div>
+          <div class="door-handle" aria-hidden="true"></div>
+          <button class="enter-btn" id="enterBtn" aria-label="Open cabinet door">Open the Cabinet</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Book modal → ready for a page-flip widget later -->
+  <dialog id="bookModal" class="modal">
+    <div class="modal-frame">
+      <header class="modal-hdr">
+        <strong id="modalTitle">Book</strong>
+        <button id="closeModal" class="btn" aria-label="Close">✕</button>
+      </header>
+      <div class="modal-content">
+        <div id="bookViewport" class="book-viewport" aria-label="Open book viewport">
+          <!-- Page-flip widget mounts here (future) -->
+        </div>
+        <div class="page-controls">
+          <button id="prevPage" class="btn">◀ Prev</button>
+          <button id="nextPage" class="btn">Next ▶</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>

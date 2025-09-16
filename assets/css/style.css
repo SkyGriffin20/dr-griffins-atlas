@@ -1,0 +1,94 @@
+﻿:root{
+  --bg:#0f0d0b; --wood:#3e2f24; --wood2:#2d221a; --gold:#d6b26e; --paper:#f6edd9; --ink:#2b211a; --accent:#8c2f2f;
+  --book-w: 84px;               /* default spine width on desktop */
+  --shelf-gap: min(2vw, 18px);
+  --cabinet-max: 1200px;
+}
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{ margin:0; font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif; background:#0c0a09; color:#eadfcd; }
+
+/* Header */
+.hdr{ display:flex; align-items:end; gap:.8rem; padding: clamp(10px, 2.5vw, 18px); }
+.brand{ margin:0; font-size: clamp(1.2rem, 3.5vw, 2rem); color:var(--gold); letter-spacing:.06em; font-variant: small-caps; text-shadow:0 0 14px rgba(214,178,110,.32); }
+.tag{ opacity:.8; font-size: clamp(.8rem, 1.6vw, 1rem); margin:0 0 .2rem 0; }
+
+/* Layout */
+.door-wrap{ position:relative; display:grid; place-items:center; padding: clamp(10px, 3vw, 24px); }
+.cabinet-area{ width:min(var(--cabinet-max), 96vw); aspect-ratio: 16/9; position:relative; }
+
+/* Cabinet */
+.cabinet{ position:absolute; inset:0; border-radius: 14px; background:
+  /* If you add a wood texture later, uncomment next line and place image in assets/img/ */
+  /* url('../img/wood.jpg') center/cover no-repeat, */
+  linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.3)),
+  repeating-linear-gradient(0deg, var(--wood) 0 18px, var(--wood2) 19px 20px);
+  box-shadow: inset 0 40px 120px rgba(0,0,0,.5), 0 30px 80px rgba(0,0,0,.6);
+  overflow:hidden;
+}
+.shelves{ position:absolute; inset: clamp(10px, 2.3vw, 22px); display:flex; flex-direction:column; gap: var(--shelf-gap); }
+.shelf{ flex:1; position:relative; background: linear-gradient(180deg, #2c2119, #241a14);
+  border: 2px solid #231a14; border-radius: 8px; box-shadow: inset 0 10px 18px rgba(0,0,0,.4);
+  display:flex; align-items:flex-end; gap:10px; padding: 10px; overflow:hidden;
+}
+.plaque{ position:absolute; top:6px; right:10px; background:rgba(0,0,0,.4); color:#d6b26e; padding:4px 8px; border-radius:6px; font-size:.8rem; border:1px solid rgba(214,178,110,.35); }
+
+/* Book spines */
+.book{ width: var(--book-w); height: 92%; min-height: 110px; border-radius: 4px; position:relative; cursor:pointer; outline: none;
+  display:flex; align-items:center; justify-content:center; writing-mode: vertical-rl; text-orientation: mixed; text-align:center; padding:8px 4px; color:#f0e7d6;
+  border-left: 8px solid rgba(0,0,0,.35); box-shadow: inset 4px 0 0 rgba(255,255,255,.06), 0 10px 18px rgba(0,0,0,.35);
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+.book:focus-visible{ outline: 2px solid #e9d8a6; outline-offset: 2px; }
+.book:hover{ transform: translateY(-3px); box-shadow: inset 4px 0 0 rgba(255,255,255,.12), 0 16px 28px rgba(0,0,0,.45); filter: saturate(1.06); }
+.book .by{ font-size:.8em; opacity:.85; }
+
+/* Cover palettes (with optional leather texture) */
+.b-nat{ background: linear-gradient(135deg, #6a5b49, #4e4236) /*, url('../img/leather.jpg') center/cover */; }
+.b-poe{ background: linear-gradient(135deg, #5a2a2a, #7a3d3d) /*, url('../img/leather.jpg') center/cover */; }
+.b-sai{ background: linear-gradient(135deg, #2c4a5a, #1e3644) /*, url('../img/leather.jpg') center/cover */; }
+.b-cle{ background: linear-gradient(135deg, #3f3a2a, #2b271c) /*, url('../img/leather.jpg') center/cover */; }
+.b-rog{ background: linear-gradient(135deg, #3c2f4f, #2b2239) /*, url('../img/leather.jpg') center/cover */; }
+
+/* Door overlay */
+.door{ position:absolute; inset:0; display:grid; place-items:center; background:
+  radial-gradient(1200px 600px at 50% -10%, rgba(0,0,0,.6), rgba(0,0,0,.9) 60%),
+  linear-gradient(180deg, rgba(0,0,0,.3), rgba(0,0,0,.6));
+  transition: clip-path .9s cubic-bezier(.2,.7,0,1), opacity .9s ease; z-index:5;
+}
+.door-inner{ width:100%; height:100%; position:relative; border-radius: 12px; overflow:hidden; background:
+  linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.25)),
+  repeating-linear-gradient(0deg, #4b392d, #4b392d 22px, #3b2c22 23px, #3b2c22 24px);
+  box-shadow: inset 0 40px 120px rgba(0,0,0,.6);
+}
+.door-title{ position:absolute; top:14px; left:50%; transform:translateX(-50%); color:var(--gold); font-variant: small-caps; letter-spacing:.08em; font-size: clamp(1rem, 3vw, 1.6rem);
+  text-shadow:0 0 12px rgba(214,178,110,.35); background: rgba(0,0,0,.35); padding:.35rem .6rem; border-radius: 8px; border:1px solid rgba(214,178,110,.35);
+}
+.door-handle{ position:absolute; right: clamp(10px, 2vw, 18px); top:50%; transform: translateY(-50%); width: clamp(18px, 2vw, 24px); height: clamp(60px, 7vh, 80px);
+  background: linear-gradient(180deg, #d9c08a, #b69345); border-radius: 8px; box-shadow: inset 0 2px 0 rgba(255,255,255,.5), 0 8px 18px rgba(0,0,0,.6);
+}
+.enter-btn{ position:absolute; bottom:14px; left:50%; transform: translateX(-50%); background:#2a2019; color:#eadfcd; border:1px solid #4a372a; border-radius: 10px; padding:.5rem .8rem; cursor:pointer; }
+.enter-btn:hover{ background:#3a2d24; }
+/* Open door */
+.door[data-open="true"]{ clip-path: inset(0 0 0 100% round 12px); opacity:0; pointer-events:none; }
+
+/* Modal */
+.modal{ border:0; padding:0; background: transparent; }
+.modal::backdrop{ background: rgba(0,0,0,.7); }
+.modal-frame{ width:min(1000px, 96vw); height:min(70vh, 80vh); display:grid; grid-template-rows:auto 1fr; background: var(--paper); color: var(--ink); border-radius:12px; box-shadow:0 30px 80px rgba(0,0,0,.6); overflow:hidden; }
+.modal-hdr{ background:#efe5cd; padding:.7rem 1rem; display:flex; align-items:center; justify-content:space-between; }
+.btn{ background:#2a2019;color:#eadfcd;border:0;border-radius:8px;padding:.35rem .6rem;cursor:pointer; }
+.btn:hover{ background:#3a2d24; }
+.modal-content{ padding:12px; display:grid; grid-template-rows: 1fr auto; gap:10px; }
+.book-viewport{ width:min(900px, 92vw); aspect-ratio: 3/2; margin: 0 auto; background:
+  /* url('../img/parchment.jpg') left/50% 100% no-repeat,
+     url('../img/parchment.jpg') right/50% 100% no-repeat, */
+  linear-gradient(90deg, #f8f0db 50%, #f3e6c6 50%);
+  border:1px solid #e6d9be; border-radius:8px; position:relative;
+}
+.page-controls{ display:flex; justify-content:flex-end; gap:8px; }
+
+/* Responsive */
+@media (max-width: 1024px){ :root{ --book-w: 72px; } }
+@media (max-width: 768px){ :root{ --book-w: 56px; } .door-title{ font-size: clamp(1rem, 4vw, 1.2rem);} }
+@media (max-width: 540px){ :root{ --book-w: 48px; } .tag{ display:none; } }
