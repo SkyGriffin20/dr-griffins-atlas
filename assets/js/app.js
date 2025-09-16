@@ -103,3 +103,9 @@ function resizeBooks(){
 // Init on load/resize
 window.addEventListener('load',  () => { fitCabinet(); resizeBooks(); });
 window.addEventListener('resize',() => { fitCabinet(); resizeBooks(); });
+
+
+enterBtn?.addEventListener('click', ()=> cabinetArea.classList.add('open'));
+
+// (You can also let users click a door group if you want)
+// document.querySelectorAll('.door-svg').forEach(d => d.addEventListener('click', ()=> cabinetArea.classList.add('open')));
