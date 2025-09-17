@@ -19,7 +19,7 @@
   /* Tweak these to taste */
   --cabinet-w: clamp(280px, 92vw, 960px);
   --cabinet-h: clamp(750px, 70dvh, 90dvh); /* dvh fixes mobile address bar jump */
-  --gap: clamp(8px, 2vw, 20px);
+  --gap: clamp(8px, 20vw, 20px);
 
   /* Book cover width (covers face the user) */
   --book-w: 160px;
