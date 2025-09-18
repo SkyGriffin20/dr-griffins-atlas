@@ -17,18 +17,22 @@
   /*--cabinet-w: 1400px;*/
   /*--cabinet-h: 800px;*/
   /* Tweak these to taste */
-  --cabinet-w: clamp(280px, 92vw, 960px);
-  --cabinet-h: clamp(520px, 80dvh, 880px); /* dvh fixes mobile address bar jump */
+  --cabinet-w: clamp(280px, 92vw, 1000px);
+  --cabinet-h: 1800px;   /* or 2000px if you want even taller */
   --gap: clamp(8px, 20vw, 20px);
   --header-offset: clamp(88px, 20vw, 132px);
 
   /* Book cover width (covers face the user) */
   --book-w: 160px;
+
+    --shelf-h: 220px; /* tweak per taste (200–260px works well) */
 }
 
 *{ box-sizing:border-box; }
 html,body{
   min-height:100%;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 body{
   margin:0;
@@ -92,15 +96,10 @@ body{
   margin-top: 35px; /* fine-tuning gap below header */
 }
 
-/* Container that we scale (JS) */
 .cabinet-area{
   width: min(100%, var(--cabinet-w));
-  height: min(var(--cabinet-h), calc(100dvh - var(--header-offset) - var(--room-pad, 0px)));
-  position: relative;
-  transform-origin: top center;
-  perspective: 1200px;                /* keep 3D for doors */
-  /* Remove cabinet drop shadow */
-  filter: none;
+  height: var(--cabinet-h);  /* allow full height */
+  max-height: none;          /* no viewport restriction */
 }
 
 /* ===========================
@@ -119,33 +118,32 @@ body{
 
 /* Shelves container */
 .shelves{
-  position:absolute; inset: 28px 32px;
-  display:flex; flex-direction:column; gap: 18px;
+  position: absolute; inset: 28px 32px;
+  display: grid;                  /* was flex */
+  grid-template-columns: 1fr;     /* one column stack */
+  grid-auto-rows: var(--shelf-h); /* every shelf same height */
+  gap: 18px;
 }
 
-/* Each shelf (no shadows) */
+/* Each shelf */
 .shelf{
-  flex:1; position:relative;
+  /* remove: flex:1; */
+  position: relative;
+  min-height: var(--shelf-h);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 14px;
+  padding: 14px;
+  overflow: hidden;
+  flex-wrap: wrap;
   background: linear-gradient(180deg, var(--shelf-face), #1f1712);
   border: 2px solid var(--shelf-edge);
   border-radius: 10px;
-  display:flex;
-  align-items:flex-start;
-  justify-content:flex-start;
-  gap:14px;
-  padding: 14px;
-  overflow:hidden;
-  /* allow covers to wrap on the shelf */
-  flex-wrap: wrap;
 }
 
 /* Shelf plaque */
-.plaque{
-  position:absolute; top:8px; right:10px;
-  background:rgba(0,0,0,.35); color:var(--gold);
-  padding:4px 8px; border-radius:6px; font-size:.9rem;
-  border:1px solid rgba(214,178,110,.35);
-}
+.plaque{ display:none !important; }
 
 /* ===========================
    BOOKS � FRONT COVERS

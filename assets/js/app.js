@@ -81,23 +81,13 @@ bookModal?.addEventListener('click', (e)=>{ if (e.target === bookModal) bookModa
 function fitCabinet(){
   if(!cabinetArea) return;
 
-  // measure cabinet at its natural size before applying scale
-  cabinetArea.style.removeProperty('transform');
+  const baseW = 1100;   // should match your --cabinet-w max in CSS (e.g., 1000 or 1100px)
+  const pad   = 40;     // breathing room around cabinet
 
-  const rect = cabinetArea.getBoundingClientRect();
-  const headerHeight = header?.offsetHeight ?? 0;
-  const horizontalPad = 24;
-  const verticalPad = 32;
+  const availW = Math.max(320, window.innerWidth - pad*2);
+  const scale  = Math.min(availW / baseW, 1);  // scale only by width, never up
 
-  const availW = Math.max(320, window.innerWidth - horizontalPad);
-  const availH = Math.max(360, window.innerHeight - headerHeight - verticalPad);
-  const scale  = Math.min(1, availW / rect.width, availH / rect.height);
-
-  if(scale < 0.999){
-    cabinetArea.style.transform = `scale(${scale})`;
-  }else{
-    cabinetArea.style.removeProperty('transform');
-  }
+  cabinetArea.style.transform = `scale(${scale})`;
 }
 
 // Normalize book height to shelf height
