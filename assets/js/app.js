@@ -1,6 +1,7 @@
 // ===== Elements =====
 const cabinetArea = document.getElementById('cabinetArea');
 const shelvesEl   = document.getElementById('shelves');
+const header      = document.querySelector('.hdr');
 
 const enterBtn  = document.getElementById('enterBtn');
 const doorLeft  = document.getElementById('doorLeft');
@@ -78,16 +79,25 @@ bookModal?.addEventListener('click', (e)=>{ if (e.target === bookModal) bookModa
 // Scale the fixed-size cabinet down on small screens, keeping aspect ratio.
 // Must match the CSS --cabinet-w/h design size.
 function fitCabinet(){
-  const baseW = 1100;   // matches --cabinet-w
-  const baseH = 620;    // matches --cabinet-h
-  const pad   = 40;     // breathing room around cabinet
   if(!cabinetArea) return;
 
-  const availW = Math.max(320, window.innerWidth  - pad*2);
-  const availH = Math.max(320, window.innerHeight - 180); // header + spacing
-  const scale  = Math.min(availW / baseW, availH / baseH, 1); // never scale up
+  // measure cabinet at its natural size before applying scale
+  cabinetArea.style.removeProperty('transform');
 
-  cabinetArea.style.transform = `scale(${scale})`;
+  const rect = cabinetArea.getBoundingClientRect();
+  const headerHeight = header?.offsetHeight ?? 0;
+  const horizontalPad = 24;
+  const verticalPad = 32;
+
+  const availW = Math.max(320, window.innerWidth - horizontalPad);
+  const availH = Math.max(360, window.innerHeight - headerHeight - verticalPad);
+  const scale  = Math.min(1, availW / rect.width, availH / rect.height);
+
+  if(scale < 0.999){
+    cabinetArea.style.transform = `scale(${scale})`;
+  }else{
+    cabinetArea.style.removeProperty('transform');
+  }
 }
 
 // Normalize book height to shelf height
@@ -109,3 +119,4 @@ enterBtn?.addEventListener('click', ()=> cabinetArea.classList.add('open'));
 
 // (You can also let users click a door group if you want)
 // document.querySelectorAll('.door-svg').forEach(d => d.addEventListener('click', ()=> cabinetArea.classList.add('open')));
+

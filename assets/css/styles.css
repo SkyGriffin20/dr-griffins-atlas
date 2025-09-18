@@ -18,20 +18,21 @@
   /*--cabinet-h: 800px;*/
   /* Tweak these to taste */
   --cabinet-w: clamp(280px, 92vw, 960px);
-  --cabinet-h: clamp(750px, 70dvh, 90dvh); /* dvh fixes mobile address bar jump */
+  --cabinet-h: clamp(520px, 80dvh, 880px); /* dvh fixes mobile address bar jump */
   --gap: clamp(8px, 20vw, 20px);
+  --header-offset: clamp(88px, 20vw, 132px);
 
   /* Book cover width (covers face the user) */
   --book-w: 160px;
 }
 
 *{ box-sizing:border-box; }
-html,body{ 
-  height:100%;
-  overflow: hidden;   /* disables both vertical and horizontal scrolling */ 
+html,body{
+  min-height:100%;
 }
 body{
   margin:0;
+  overflow-x:hidden;
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
   color:#eadfcd;
   background:
@@ -73,18 +74,16 @@ body{
   color: #eadfcd;
 }
 
-/* Push the room content down so it's not hidden behind header */
-.room {
-  padding-top: 120px; /* adjust depending on header height */
-}
-
 /* ===========================
    ROOM / LAYOUT
    =========================== */
 .room{
+  --room-pad: clamp(16px, 4vw, 32px);
+  /* ensure space for the fixed header */
   min-height: calc(100vh - 64px);
   display:grid; place-items:center;
-  padding: clamp(12px, 3vw, 28px);
+  padding: var(--room-pad);
+  padding-top: calc(var(--header-offset) + var(--room-pad));
 }
 
 .cabinet-wrap{
@@ -95,8 +94,8 @@ body{
 
 /* Container that we scale (JS) */
 .cabinet-area{
-  width: var(--cabinet-w);
-  height: var(--cabinet-h);
+  width: min(100%, var(--cabinet-w));
+  height: min(var(--cabinet-h), calc(100dvh - var(--header-offset) - var(--room-pad, 0px)));
   position: relative;
   transform-origin: top center;
   perspective: 1200px;                /* keep 3D for doors */
@@ -149,7 +148,7 @@ body{
 }
 
 /* ===========================
-   BOOKS — FRONT COVERS
+   BOOKS � FRONT COVERS
    =========================== */
 .book{
   width: var(--book-w);
@@ -277,7 +276,17 @@ body{
   :root{ --book-w: 100px; }
 }
 @media (max-width: 560px){
-  :root{ --book-w: 88px; }
+  :root{
+    --book-w: 88px;
+    --header-offset: clamp(72px, 22vw, 100px);
+  }
+  .hdr{ padding: 8px 16px; }
   .tag{ display:none; }
 }
+
+
+
+
+
+
 
